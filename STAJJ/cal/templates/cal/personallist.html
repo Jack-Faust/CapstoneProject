@@ -1,0 +1,38 @@
+<!--This html page displays event details the Personal Calendar Listview-->
+{% extends 'cal/base.html' %}
+
+{% block title %}
+Personal Event List
+{% endblock %}
+
+{% block content %}
+<style>
+    .btn {
+      background-color: #73000a;
+    }
+	.btn:hover {
+      background-color:#000000;
+      transition: 0.3s;
+  }
+</style>
+<form method="get" class="eventfilter">
+	{{ eventfilter }}
+
+	<button class="btn btn-primary" type="submit">
+		Search
+	</button>
+</form>
+
+<div class="clearfix">
+	<form id="remove_event" method="get" action="{% url 'cal:cockycal-personallist' %}">
+		{% csrf_token %}
+		<a class="btn btn-info left" href="/personalcal/event/new"> Create Event </a>
+		<button class="btn btn-info right" name="Remove" type="submit"> Remove Selected Events</button>
+		<a class="btn btn-info right" href="/personalcal"> Calendar View </a>
+		<br><br>
+		{{ personallist }}           
+	</form>
+</div>
+
+
+{% endblock %}

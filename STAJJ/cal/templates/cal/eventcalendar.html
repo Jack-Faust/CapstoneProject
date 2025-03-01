@@ -1,0 +1,36 @@
+<!--using tutorial at https://github.com/huiwenhw/django-calendar-->
+<!--This html page displays the Event Calendar-->
+{% extends 'cal/base.html' %}
+{% block content %}
+<style>
+    .btn {
+      background-color: #73000a;
+    }
+	.btn:hover {
+      background-color:#000000;
+      transition: 0.3s;
+  }
+</style>
+<h1 class="text-5xl font-bold text-gray-900 pl-5">Event Calendar</h1>
+<div class="clearfix">
+	<a class="btn btn-info left" href="/eventcal/event/new"> Create Event </a>
+	<a class="btn btn-info right" href="/eventcal/listview"> Show List View </a>
+</div>
+<form method="get" class="eventfilter">
+	{{ eventfilter }}
+	<input type="hidden" name="month" value="{{ month }}" />
+	<button class="btn btn-primary" type="submit">
+		Search
+	</button>
+</form>
+
+
+<div class="clearfix">
+	<a class="btn btn-info left" href="{% url 'cal:cockycal-eventcal' %}?{{ prev_month }}{{ filterParams }}"> &lt; Previous Month</a>
+	<a class="btn btn-info right" href="{% url 'cal:cockycal-eventcal' %}?{{ next_month }}{{ filterParams }}"> Next Month &gt; </a>
+</div>
+
+{{ eventcalendar }}
+{{ legend }}
+
+{% endblock %}

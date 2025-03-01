@@ -1,0 +1,30 @@
+<!-- https://www.youtube.com/watch?v=q4jPR-M0TAQ&list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p&index=6 -->
+<!-- used this tutorial to set up my user registration system-->
+
+{% extends "cockycal/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<!-- Creates registration form for new user -->
+<!--register page for cocky cal-->
+    <div class = "content-section">
+        <form method = "POST">
+            {% csrf_token %}
+            <legend class = "border-bottom mb-4">Register Today </legend>  
+            <fieldset class = "form-group">
+                {{ form|crispy}}
+            </fieldset>
+            <div class = "form-group">
+                <button class = "btn btn-outline-info" type ="submit"> Sign Up </button>
+            </div>
+        </form>
+        <div class ="border-top pt-3">
+            <small class = "text-muted"> 
+                Already Have An Account? <a class="ml-2" href="/login">Sign In</a>
+            </small>
+        </div>
+
+{% endblock content %}

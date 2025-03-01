@@ -1,0 +1,30 @@
+<!--This html page displays the form to edit a Personal event for those that posted it and redirects to the Personal Calendar-->
+{% extends 'cal/base.html' %}
+
+{% block title %}
+Edit Your Event
+{% endblock %}
+
+{% block content %}
+<style>
+  .btn {
+    background-color: #73000a;
+  }
+.btn:hover {
+    background-color:#000000;
+    transition: 0.3s;
+}
+</style>
+<div class="clearfix">
+  <a class="btn btn-info left" href="/personalcal"> Calendar </a>
+</div>
+
+<form method="post">
+  {% csrf_token %}
+  <table class="form form-table">
+    {{ form }}
+    <tr><td colspan="0"><button type="submit" name="Delete" class="btn btn-info left">Delete Event</button></td></tr>
+    <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Submit </button></td></tr>
+  </table>
+</form>
+{% endblock %}

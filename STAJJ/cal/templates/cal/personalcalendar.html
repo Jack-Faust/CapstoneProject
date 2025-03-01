@@ -1,0 +1,39 @@
+<!--This html page displays event details the personal Calendar-->
+{% extends 'cal/base.html' %}
+{% block content %}
+<style>
+    .btn {
+      background-color: #73000a;
+    }
+	.btn:hover {
+      background-color:#000000;
+      transition: 0.3s;
+  }
+</style>
+<h1 class="text-5xl font-bold text-gray-900 pl-5">Personal Calendar</h1>
+<div class="clearfix">
+	<a class="btn btn-info left" href="/personalcal/event/new"> Create Event </a>
+	<a class="btn btn-info right" href="/personalcal/listview"> Show List View </a>
+</div>
+
+<form method="get" class="eventfilter">
+	{{ eventfilter }}
+	<input type="hidden" name="month" value="{{ month }}" />
+	<button class="btn btn-primary" type="submit">
+		Search
+	</button>
+</form>
+
+<div class="clearfix">
+	<a class="btn btn-info left" href="{% url 'cal:cockycal-personalcal' %}?{{ prev_month }}{{ filterParams }}"> &lt; Previous Month</a>
+	<a class="btn btn-info right" href="{% url 'cal:cockycal-personalcal' %}?{{ next_month }}{{ filterParams }}"> Next Month &gt; </a>
+</div>
+
+{{ personalcalendar }}
+{{ legend }}
+
+
+
+
+
+{% endblock %}

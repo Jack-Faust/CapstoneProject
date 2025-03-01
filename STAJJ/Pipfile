@@ -1,0 +1,33 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "*"
+django = "*"
+django-crispy-forms = "*"
+pillow = "*"
+bootstrap-py = "*"
+gunicorn = "*"
+dj-database-url = "*"
+psycopg2-binary = "*"
+django-discover-runner = "*"
+pandas = "*"
+webdriver-manager = "*"
+whitenoise = "*"
+django-filter = "*"
+selenium = "*"
+django-bootstrap4 = "*"
+setuptools = ">=67.0.0"
+crispy_bootstrap5 = "*"
+django-phonenumber-field = "*"
+phonenumbers = "*"
+django-resized = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
+asgiref = "3.5.2"
+sqlparse = "0.4.3"

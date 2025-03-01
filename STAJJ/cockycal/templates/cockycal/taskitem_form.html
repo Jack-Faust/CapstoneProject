@@ -1,0 +1,38 @@
+{% extends "cockycal/base.html" %}
+
+{% block content %}
+<!-- This is the html to display the form used to display the aspects of creating and or updating individual tasks. Created by Anne -->
+<br>
+<br>
+<link href="https://unpkg.com/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet" />
+<div class="py-8 px-5 pr-10 w-screen">
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div class="rounded">
+            <div class="mb-6 flex items-center justify-between">
+                <h2 class="text-2xl font-semibold text-gray-900">{{title}}</h2>
+            </div>
+            <div class="w-max h-full py-3 px-2 bg-red-950 rounded-lg">
+                <div class="w-auto bg-gray-200 rounded-xl shadow mb-3 py-5 px-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        <table>
+                            {{ form.as_table }}
+                        </table>
+                        <div class="pt-6">
+                            <input
+                            <button type="submit" class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 rounded-full text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800" value="Submit"></button>
+                            <input
+                            <button type="button" onclick=location.href='{% url "cockycal-tasklist" %}' class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 rounded-full text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800" value="Cancel"></button>
+                            {% if object %}
+                            <input
+                            <button type="button" onclick=location.href='{% url "item-delete" object.id %}' class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 rounded-full text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800" value="Delete"></button>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>   
+            </div> 
+        </div>  
+    </div>
+</div>
+<script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+{% endblock %}

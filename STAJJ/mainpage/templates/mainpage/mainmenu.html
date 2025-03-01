@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<title>Cocky Calendar</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+body, html {
+  height: 100%;
+  line-height: 1.8;
+}
+
+/* Full height image header */
+.bgimg-1 {
+  background-position: center;
+  background-size: cover;
+  background-color: #5C5C5C;
+  min-height: 100%;
+}
+
+.w3-bar .w3-button {
+  padding: 16px;
+}
+
+
+</style>
+</head>
+<body>
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-card" style= "background-color:#73000A" id="myNavbar">
+    <a href="#home" class="w3-bar-item w3-button w3-wide" style= "color:#bbbbbb">Cocky Calendar</a>
+    {% if user.is_authenticated %}
+    <a href="/home" onclick="w3_close()" class="w3-bar-item w3-button w3-wide"style= "color:#bbbbbb">Home</a>
+    {% endif %}
+    <!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small">
+      {% if user.is_authenticated %}
+      <a href="#about" class="w3-bar-item w3-button" style= "color:#bbbbbb"><i class="fa fa-info-circle"></i>Learn More</a>
+      <a href="#team" class="w3-bar-item w3-button" style= "color:#bbbbbb"><i class="fa fa-users"></i>About Us</a>
+      <a href="#contact" class="w3-bar-item w3-button" style= "color:#bbbbbb"><i class="fa fa-phone"></i> Contact Us</a>
+      <a href= "/logout" class="w3-bar-item w3-button" style= "color:#bbbbbb"><i class="fa fa-sign-out"></i> Logout</a>
+      {% else %}
+      <a href="/login" class="w3-bar-item w3-button" style= "color:#bbbbbb"><i class="fa fa-user"></i> Login</a>
+      <a href="/register" class="w3-bar-item w3-button" style= "color:#bbbbbb"><i class="fa fa-user-plus"></i> Register</a>
+      <a href="#about" class="w3-bar-item w3-button" style= "color:#bbbbbb"><i class="fa fa-info-circle"></i>Learn More</a>
+      <a href="#team" class="w3-bar-item w3-button" style= "color:#bbbbbb"><i class="fa fa-users"></i>About Us</a>
+      <a href="#contact" class="w3-bar-item w3-button" style= "color:#bbbbbb"><i class="fa fa-phone"></i> Contact Us</a>
+      {% endif %}
+      
+    </div>
+    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
+  {% if user.is_authenticated %}
+  <a href="/home" onclick="w3_close()" class="w3-bar-item w3-button">Home</a>
+  <a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button">Logout</a>
+  {% else %}
+  <a href="/login" onclick="w3_close()" class="w3-bar-item w3-button">Login</a>
+  <a href="/register" onclick="w3_close()" class="w3-bar-item w3-button">Register</a>
+  {% endif%}
+  <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">Learn More</a>
+  <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">About Us</a>
+  <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">Contact Us</a>
+</nav>
+
+<!-- Header with full-height image -->
+<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-left w3-text-white" style="padding:48px">
+    <span class="w3-jumbo w3-hide-small">The Best Way to Stay Informed About All UofSC Activities</span><br>
+    <span class="w3-xxlarge w3-hide-large w3-hide-medium">The Best Way to Stay Informed About All UofSC Activities</span><br>
+    <span class="w3-large">Welcome to the official Cocky Calendar Website! <br>Stay up to date on al of the latest events happening on and off campus at the University of South Carolina</span>
+    <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Learn more and Start Today</a></p>
+  </div>
+</header>
+
+<!-- About Section -->
+<div class="w3-container" style="padding:128px 16px" id="about">
+  <h3 class="w3-center">ABOUT COCKY CALENDAR</h3>
+  <p class="w3-center w3-large">Key features of our application</p>
+  <div class="w3-row-padding w3-center" style="margin-top:64px">
+    <div class="w3-quarter">
+      <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
+      <p class="w3-large">Login Anywhere!</p>
+      <p>Login from any device after signing up using your username and password.</p>
+    </div>
+    <div class="w3-quarter">
+      <i class="fa fa-id-card w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">UofSC Students Only</p>
+      <p>You must be an active student with a school registered email in order to make an account</p>
+    </div>
+    <div class="w3-quarter">
+      <i class="fa fa-check-square-o w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Pick Your Events</p>
+      <p>Select from hundreds of UofSC events happening in Columbia, or create your own!</p>
+    </div>
+    <div class="w3-quarter">
+      <i class="fa fa-calendar w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Create Your Personal Calendar</p>
+      <p>Add events to your personal calendar to help you organize your itenerary.</p>
+    </div>
+  </div>
+</div>
+<div class="w3-container w3-center w3-dark-grey" style="padding:250px 200px" id="final-video">
+  <h2>Key Features</h2>
+  <iframe width="900" height="600" src="https://www.youtube.com/embed/EyBiTJcfwW0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+  
+  <img src="{% static 'images/Event-Calendar.png' %}" alt="Event Calendar" class="w3-image" style="width:50%;margin-top:48px">
+  <img src="{% static 'images/homepage.png' %}" alt="Event Calendar" class="w3-image" style="width:50%;margin-top:48px">
+  <img src="{% static 'images/ListView.png' %}" alt="Event Calendar" class="w3-image" style="width:50%;margin-top:48px">
+  <img src="{% static 'images/example.png' %}" alt="Event Calendar" class="w3-image" style="width:50%;margin-top:48px">
+  <img src="{% static 'images/personal.png' %}" alt="Event Calendar" class="w3-image" style="width:50%;margin-top:48px">
+  <img src="{% static 'images/tasklist.png' %}" alt="Event Calendar" class="w3-image" style="width:50%;margin-top:48px">
+
+  
+</div>
+<!-- Promo Section - "We know design" -->
+<div class="w3-container w3-light-grey" style="padding:128px 16px">
+  <h3 class="w3-center">UofSC Related Links</h3>
+  <p class="w3-center w3-large">Additional Information Can Be Found in the Links Below:</p>
+  <li class="w3-center w3-large"> <a href="https://sc.edu">Official UofSC Website</a></li>
+   <li class="w3-center w3-large"><a href="https://my.sc.edu">My.SC</a></li>
+   <li class="w3-center w3-large"><a href="https://blackboard.sc.edu">Blackboard</a></li>
+  </p>
+</div>
+
+
+<!-- Promo Section "Statistics" -->
+<div class="w3-container w3-row w3-center w3-dark-grey w3-padding-64">
+  <div class="w3-quarter">
+    <span class="w3-xxlarge">50+</span>
+    <br>Users
+  </div>
+  <div class="w3-quarter">
+    <span class="w3-xxlarge">100+</span>
+    <br>Events
+  </div>
+  <div class="w3-quarter">
+    <span class="w3-xxlarge">89+</span>
+    <br>Happy Clients
+  </div>
+  <div class="w3-quarter">
+    <span class="w3-xxlarge">100%</span>
+    <br>Satisfaction Guaranteed
+  </div>
+</div>
+
+
+<!--Team Section -->
+<div class="w3-container" style="padding:128px 16px" id="team">
+  <h3 class="w3-center">THE TEAM</h3>
+  <p class="w3-center w3-large">The designers and creators behind Cocky Calendar</p>
+  <div class="w3-row-padding w3-grayscale" style="margin-top:64px">
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-card">
+        <div class="w3-container">
+          <h3>Anne Tumlin</h3>
+          <p class="w3-opacity">Full Stack Engineer</p>
+          <!--<p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>-->
+          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-github"></i><a href = "https://github.com/atumlin">Github</a></button></p>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-card">
+        <div class="w3-container">
+          <h3>Jack Faust</h3>
+          <p class="w3-opacity">Full Stack Engineer</p>
+          <!--<p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>-->
+          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-github"></i><a href = "https://github.com/jack-faust">Github</a></button></p>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-card">
+        <div class="w3-container">
+          <h3>Tom Crookes</h3>
+          <p class="w3-opacity">Full Stack Engineer</p>
+          <!--<p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>-->
+          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-github"></i><a href = "https://github.com/tomcrookes">Github</a></button></p>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-card">
+        <!--<img src="/images/team4.png" alt="Sarah" style="width:100%">-->
+        <div class="w3-container">
+          <h3>Sarah Carlucci</h3>
+          <p class="w3-opacity">Full Stack Engineer</p>
+          <!--<p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>-->
+          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-github"></i><a href = "https://github.com/sarahcarlucci">Github</a></button></p>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-card">
+        <!--<img src="tomc.jpg" alt="Joe" style="width:100%">-->
+        <div class="w3-container">
+          <h3>Joe Foray</h3>
+          <p class="w3-opacity">Full Stack Engineer</p>
+          <!--<p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>-->
+          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-github"></i><a href = "https://github.com/jforay">Github</a></button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Section -->
+<div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
+  <h3 class="w3-center">CONTACT</h3>
+  <p class="w3-center w3-large">Lets get in touch. Send us a message:</p>
+  <div style="margin-top:48px">
+    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> Columbia, US</p>
+    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Phone: +1 (803)-500-2705</p>
+    <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email: cockycalendarteam@gmail.com</p>
+    <br>
+    <!-- Image of USC flag -->
+    <img src="https://cdn.vox-cdn.com/thumbor/kMmPBT7VGzpZgQ54bpXTMmzBZ1w=/0x0:3000x2000/1200x800/filters:focal(1260x760:1740x1240)/cdn.vox-cdn.com/uploads/chorus_image/image/68578572/1277058625.0.jpg" class="w3-image w3-greyscale" style="width:100%;margin-top:48px">
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-64">
+  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+  <p><button class="w3-button w3-light-grey"><i class="fa fa-github"></i><a href = "https://github.com/SCCapstone/STAJJ">Check Out Our Github!</a></button></p>
+</footer>
+ 
+<script>
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+
+// Toggle between showing and hiding the sidebar when clicking the menu icon
+var mySidebar = document.getElementById("mySidebar");
+
+function w3_open() {
+  if (mySidebar.style.display === 'block') {
+    mySidebar.style.display = 'none';
+  } else {
+    mySidebar.style.display = 'block';
+  }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+}
+</script>
+
+</body>
+</html>

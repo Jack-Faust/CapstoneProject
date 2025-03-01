@@ -1,0 +1,214 @@
+{% extends "cockycal/base.html" %}
+{% load crispy_forms_tags %}
+{% if user.is_authenticated %}
+{% block content %}
+
+<!-- This is the task list page. This displays the multiple containers of tasklists and outputs the information for each task. Created by Anne Tumlin. -->
+
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+body, html {
+  height: 100%;
+  line-height: 1.8;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: #007000;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dotN {
+  height: 10px;
+  width: 10px;
+  background-color: #d2222d;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+</style>
+  {% if user.is_authenticated %}
+      <!-- <link href="https://unpkg.com/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet" /> -->
+      <br>
+      <br> 
+      <br>
+      <div id="testid" class="py-8 px-5 pr-10 w-auto">
+        <div class="flex items-center justify-between mb-10">
+            <h1 class="text-4xl text-gray-900">Task Lists</h1>
+            <div class="cursor-pointer w-10 h-10 bg-gray-900 text-white rounded-full flex justify-center items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" onclick=location.href='{% url "item-add" %}' width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" />
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+            </div>
+        </div>
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div class="rounded pb-5">
+                <div class="mb-6 flex items-center justify-between">
+                    <h3 class="text-2xl font-semibold text-gray-900 py-2">General Tasks</h3>
+                </div>
+                <div class="w-full h-full py-3 px-2 bg-gray-200 rounded-lg">
+                  {% for task in general_tasks %}
+                    <div class="w-full bg-white rounded-xl shadow mb-3 py-5 px-4">
+                        <h4 class="text-gray-800 font-semibold mb-4">{{ task.title }}</h4>
+                        <p class="mb-3 text-gray-600 text-sm">{{ task.description }}</p>
+                        {% if task.completed %} 
+                          <span class="dot"></span>
+                          <span class="mb-3 text-gray-600 text-xs">Completed</span>
+                        {% else %}
+                          <span class="dotN"></span>
+                          <span class="mb-3 text-gray-600 text-xs">Not Completed</span>
+                        {% endif %}
+                        <div class="flex items-center justify-between text-gray-600">
+                            <div class="mb-3 rounded-full border border-gray-400 py-1 pl-2 pr-3 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 icon icon-tabler icon-tabler-alarm" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" />
+                                    <circle cx="12" cy="13" r="7" />
+                                    <polyline points="12 10 12 13 14 13" />
+                                    <line x1="7" y1="4" x2="4.25" y2="6" />
+                                    <line x1="17" y1="4" x2="19.75" y2="6" />
+                                </svg>
+                                <p class="ml-0 text-xs">{{ task.due_date | date:"l, F j g:i a" }}</p>
+                            </div>
+                        </div>
+                        <div class="mt-0 flex justify-between items-center text-gray-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots" onclick=location.href='{% url "item-update" task.id %}' width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" />
+                                <circle cx="5" cy="12" r="1" />
+                                <circle cx="12" cy="12" r="1" />
+                                <circle cx="19" cy="12" r="1" />
+                            </svg>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+            </div>
+            <div class="rounded pb-5">
+                <div class="mb-6 flex items-center justify-between">
+                    <h3 class="text-2xl font-semibold text-gray-900 py-2">Priority Tasks</h3>
+                </div>
+                <div class="w-full h-full py-3 px-2 bg-gray-200 rounded-lg">
+                  {% for task in pri_tasks %}
+                    <div class="w-full bg-white rounded-lg shadow mb-3 py-5 px-4">
+                        <h4 class="text-gray-800 font-semibold mb-4">{{ task.title }}</h4>
+                        <p class="mb-3 text-gray-600 text-sm">{{ task.description }}</p>
+                        {% if task.completed %} 
+                          <span class="dot"></span>
+                          <span class="mb-3 text-gray-600 text-xs">Completed</span>
+                        {% else %}
+                          <span class="dotN"></span>
+                          <span class="mb-3 text-gray-600 text-xs">Not Completed</span>
+                        {% endif %}
+                        <div class="flex items-center justify-between text-gray-600">
+                            <div class="mb-3 rounded-full border border-gray-400 py-1 pl-2 pr-3 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 icon icon-tabler icon-tabler-alarm" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" />
+                                    <circle cx="12" cy="13" r="7" />
+                                    <polyline points="12 10 12 13 14 13" />
+                                    <line x1="7" y1="4" x2="4.25" y2="6" />
+                                    <line x1="17" y1="4" x2="19.75" y2="6" />
+                                </svg>
+                                <p class="ml-0 text-xs">{{ task.due_date | date:"l, F j g:i a" }}</p>
+                            </div>
+                        </div>
+                        <div class="mt-0 flex justify-between items-center text-gray-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots" onclick=location.href='{% url "item-update" task.id %}' width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" />
+                                <circle cx="5" cy="12" r="1" />
+                                <circle cx="12" cy="12" r="1" />
+                                <circle cx="19" cy="12" r="1" />
+                            </svg>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            <div class="rounded pb-5">
+              <div class="mb-6 flex items-center justify-between">
+                  <h3 class="text-2xl font-semibold text-gray-900 py-2">Class Tasks</h3>
+              </div>
+              <div class="w-full h-full py-3 px-2 bg-gray-200 rounded-lg">
+                {% for task in class_tasks %}
+                  <div class="w-full bg-white rounded-lg shadow mb-3 py-5 px-4">
+                      <h4 class="text-gray-800 font-semibold mb-4">{{ task.title }}</h4>
+                      <p class="mb-3 text-gray-600 text-sm">{{ task.description }}</p>
+                      {% if task.completed %} 
+                          <span class="dot"></span>
+                          <span class="mb-3 text-gray-600 text-xs">Completed</span>
+                        {% else %}
+                          <span class="dotN"></span>
+                          <span class="mb-3 text-gray-600 text-xs">Not Completed</span>
+                        {% endif %}
+                      <div class="flex items-center justify-between text-gray-600">
+                          <div class="mb-3 rounded-full border border-gray-400 py-1 pl-2 pr-3 flex items-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 icon icon-tabler icon-tabler-alarm" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" />
+                                  <circle cx="12" cy="13" r="7" />
+                                  <polyline points="12 10 12 13 14 13" />
+                                  <line x1="7" y1="4" x2="4.25" y2="6" />
+                                  <line x1="17" y1="4" x2="19.75" y2="6" />
+                              </svg>
+                              <p class="ml-0 text-xs">{{ task.due_date | date:"l, F j g:i a" }}</p>
+                          </div>
+                      </div>
+                      <div class="mt-0 flex justify-between items-center text-gray-600">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots" onclick=location.href='{% url "item-update" task.id %}' width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" />
+                              <circle cx="5" cy="12" r="1" />
+                              <circle cx="12" cy="12" r="1" />
+                              <circle cx="19" cy="12" r="1" />
+                          </svg>
+                      </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="rounded pb-5">
+              <div class="mb-6 flex items-center justify-between">
+                  <h3 class="text-2xl font-semibold text-gray-900 py-2">Misc. Tasks</h3>
+              </div>
+              <div class="w-full h-full py-3 px-2 bg-gray-200 rounded-lg">
+                {% for task in misc_tasks %}
+                  <div class="w-full bg-white rounded-lg shadow mb-3 py-5 px-4">
+                      <h4 class="text-gray-800 font-semibold mb-4">{{ task.title }}</h4>
+                      <p class="mb-3 text-gray-600 text-sm">{{ task.description }}</p>
+                      {% if task.completed %} 
+                          <span class="dot"></span>
+                          <span class="mb-3 text-gray-600 text-xs">Completed</span>
+                        {% else %}
+                          <span class="dotN"></span>
+                          <span class="mb-3 text-gray-600 text-xs">Not Completed</span>
+                        {% endif %}
+                      <div class="flex items-center justify-between text-gray-600">
+                          <div class="mb-3 rounded-full border border-gray-400 py-1 pl-2 pr-3 flex items-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 icon icon-tabler icon-tabler-alarm" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" />
+                                  <circle cx="12" cy="13" r="7" />
+                                  <polyline points="12 10 12 13 14 13" />
+                                  <line x1="7" y1="4" x2="4.25" y2="6" />
+                                  <line x1="17" y1="4" x2="19.75" y2="6" />
+                              </svg>
+                              <p class="ml-0 text-xs">{{ task.due_date | date:"l, F j g:i a" }}</p>
+                          </div>
+                      </div>
+                      <div class="mt-0 flex justify-between items-center text-gray-600">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots" onclick=location.href='{% url "item-update" task.id %}' width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" />
+                              <circle cx="5" cy="12" r="1" />
+                              <circle cx="12" cy="12" r="1" />
+                              <circle cx="19" cy="12" r="1" />
+                          </svg>
+                      </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock content %}
+{% endif %}

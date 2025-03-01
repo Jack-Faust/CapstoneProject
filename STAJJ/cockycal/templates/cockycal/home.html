@@ -1,0 +1,152 @@
+{% extends "cockycal/base.html" %}
+
+{% block styles %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }
+  .custom-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+  .profile img {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+    button {
+    background-color: #73000a;
+    }
+    .custom-btn:hover {
+    background-color: #000000;
+    transition: 0.3s;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <br>
+    <br>
+    
+    <h1 class="text-5xl font-bold text-gray-900 pl-5">Welcome {{ user.username }}</h1>        
+        
+    </div>
+    <br>
+    <br>
+    <div class="row custom-row">
+        <div class="col-md-6">
+            <h1 class="text-3xl text-gray-900 pl-5">7-Day Weather Forecast:</h1>
+            {% if weather_forecast %}   
+            <table class="table table-bordered" cellspacing="30" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>Date,</th>
+                        <th>Day Temp,</th>
+                        <th>Night Temp,</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                {% for date in weather_forecast %}
+                    <tr>
+                        <td>{{ date.date }}</td>
+                        <td>{{ date.temp_high }}°F</td>
+                        <td>{{ date.temp_low }}°F</td>
+                        <td>{{ date.description }} <img src = "http://openweathermap.org/img/w/{{ date.icon }}.png" alt="Image Not Available."/></td>
+                    </tr>
+                {% endfor %}
+            </table>    
+            {% endif %}   
+        </div>
+        <div class="col-md-6">
+            {% if upcoming %}
+            <h2 class="text-3xl text-gray-900 pl-5">Upcoming Events:</h2>
+            <form id="eventForm" method="post" action="{% url 'cockycal-home' %}">
+                {% csrf_token %}                
+                <table class="table table-bordered" cellspacing="30" cellpadding="5">
+                    <thead>
+                        <tr>
+                            <th>Remove</th>
+                            <th>Title</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    {% for event in upcoming %}
+                        <tr>
+                            <td><input type = "checkbox" name="delete_event" value="{{ event.id }}"></td>
+                            <td>
+                                <a href="{% url 'cal:event_details' event_id=event.id %}">{{ event.title }}</a>
+                            </td>
+                            <td>{{ event.start_time}}</td>
+                            <td>{{ event.end_time }}</td>
+                            <td>{{ event.location }} </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <br><button type="submit" style="background-color:#73000a; color:#fff" class="btn btn-primary custom-btn"> Remove Selected Events</button><br><br><br>   
+            </form>
+            {% else %}
+            <h2 class="text-3xl text-gray-900 pl-5">Add an event to your personal calendar to view your upcoming events!</h2><br><br><br><br><br>
+            {% endif %}
+            {% if tasks %}
+            <h2 class="text-3xl text-gray-900 pl-5">Upcoming Tasks:</h2>
+            <form id="taskForm" method="post" action="{% url 'cockycal-home' %}">
+                {% csrf_token %}     
+                <table class="table table-bordered" cellspacing="30" cellpadding="5">
+                    <thead>
+                        <tr>
+                            <th>Completed</th>
+                            <th>Title</th>
+                            <th>Due Date</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    {% for task in tasks %}
+                        <tr>
+                            <td><input type = "checkbox" name="task_completed" value="{{ task.pk }}"></td>
+                            <td>{{ task.title }}</td>
+                            <td>{{ task.due_date }}</td>
+                            <td>{{ task.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            <br><button type="submit" style="background-color:#73000a; color:#fff" class="btn btn-primary custom-btn"> Remove Selected Tasks</button><br><br><br>   
+        </form>
+            {% else %} 
+            <br><br><br><br><br><br>
+            <h1 class="text-3xl text-gray-900 pl-5">Create a Task to view your upcoming tasks!</h1>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

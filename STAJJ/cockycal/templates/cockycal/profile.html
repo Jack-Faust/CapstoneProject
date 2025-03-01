@@ -1,0 +1,86 @@
+<!--this page contains the html for the profile page -->
+{% extends "cockycal/base.html" %}
+{% load crispy_forms_tags %}
+{% if user.is_authenticated %}
+{% block content %}
+    {% if user.is_authenticated %}
+    <br>
+    <br>
+    <br>
+    <!--about me container by sarah carlucci -->
+    <div class="content-section pl-5">
+      <h1 class="text-5xl text-gray-900 pb-5">{{ user.username }}</h1>
+      <div class="media">
+        
+        <div class="media-body">
+          <div class="media">
+            <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+          </div>
+          <!--displays the users information-->
+          <h2 class="account-heading">About Me </h2>
+          <p class="text-secondary py-2">{{ user.email }}</p>
+          <label for="name">Name: {{ user.profile.name }}</label><br>
+          <label for="name">Occupation: {{ user.profile.occupation }}</label><br>
+          <label for="name">Birthday: {{ user.profile.birthday }}</label><br>
+          <label for="name">Phone Number: {{ user.profile.phonenumber }}</label><br>
+        </div>
+      </div>
+   </div>
+
+   <!--form to update user's profile info information-->
+   <!--updates info on screen after -->
+    <div class="content-section pl-5">
+      <form method = "POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <legend class = "border-bottom mb-4">Update Your Profile Info Here! </legend>  
+        <fieldset class = "form-group">
+            {{ p_form|crispy}}
+        </fieldset>
+        
+        <div class = "form-group">
+          
+            <button class = "btn btn-outline-info" type ="submit">Update </button>
+        </div>
+    </form>
+    </div>
+    <!-- displays the users upcoming events for the week-->
+    <div class="pl-5">
+      {% if weekly %}
+      <h5>This Weeks Events:</h5>             
+      <table class="table table-bordered" cellspacing="30" cellpadding="5">
+          <thead>
+              <tr>
+                  <th>Title</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Location</th>
+              </tr>
+          </thead>
+          {% for event in weekly %}
+              <tr>
+                  <td>
+                      <a href="{% url 'cal:event_details' event_id=event.id %}">{{ event.title }}</a>
+                  </td>
+                  <td>{{ event.start_time}}</td>
+                  <td>{{ event.end_time }}</td>
+                  <td>{{ event.location }} </td>
+              </tr>
+          {% endfor %}
+      </table>
+      {% else %}
+      <h2>Events occuring in the next 7 days will show here!</h2>
+      {% endif %}
+      <br><br><br>
+    </div>
+
+    {% else %}
+    <h2>To View Calendar Features, Login Below  </h2>
+      <div class ="border-top pt-3">
+        <small class = "text-muted"> 
+             <a href="/">Login</a>
+        </small>
+      </div>
+    {% endif %}
+{% endblock content %}
+{% endif %}
+

@@ -1,0 +1,9 @@
+<!--from tutorial at https://github.com/veryacademy/YT_Django_Admin_csv_Button_Upload/blob/main/templates/admin/csv_upload.html-->
+{% extends 'admin/change_list.html' %}
+{% load static %}
+{% block content %}
+
+<a href="upload-csv/">Upload a csv file</a>
+
+{{ block.super }}
+{% endblock %}
